@@ -1,11 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Battery Animation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1d2b3a 0%, #0c1218 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .container {
+            background-color: rgba(12, 18, 24, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #e0e0e0;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(0, 255, 135, 0.2);
+        }
+
+        .battery-container {
+            position: relative;
+            width: 80%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .battery {
+            height: 120px;
+            border: 5px solid rgba(255, 255, 255, 0.6);
+            background: transparent;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .battery::before {
+            content: '';
+            height: 40%;
+            width: 20px;
+            background-color: rgba(255, 255, 255, 0.6);
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 0 5px 5px 0;
+        }
+
+        .charge {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0; /* Set initial position */
+            background: linear-gradient(90deg, #00ff87, #66ffbe);
+            box-shadow: 0 0 15px #00ff87, 0 0 25px #00ff87;
+            transform: translateX(-100%);
+            animation: chargeAnimation 5s ease-in-out infinite;
+            overflow: hidden;
+            z-index: 1; /* Set z-index lower than the icon */
+        }
+        
+        .charge::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 40%;
+            animation: wave 5s linear infinite;
+        }
+        
+        @keyframes chargeAnimation {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(0%); }
+        }
+        
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .battery-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3.5rem; /* Made icon bigger */
+            color: #fff;
+            z-index: 10; /* Set z-index higher than the charge layer */
+            text-shadow: 0 0 10px rgba(0,0,0,0.7);
+            animation: icon-glow 2s ease-in-out infinite;
+        }
+
+        /* Replaced the percentage with a glowing icon */
+        @keyframes icon-glow {
+            0%, 100% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.1);
+                text-shadow: 0 0 15px #fff;
+            }
+        }
+
+        .status {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: #9ab;
+            animation: pulse 2s infinite ease-in-out;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @media (max-width: 576px) {
+            h1 { font-size: 2rem; }
+            .battery { height: 100px; }
+            .battery-icon { font-size: 2.5rem; }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Hello Hi Bye</h1>
+    <div class="container">
+        <h1>System Power Core</h1>
+        <div class="battery-container">
+            <div class="battery">
+                <div class="charge"></div>
+                <div class="battery-icon">⚡</div>
+            </div>
+        </div>
+        <div class="status">Charging...</div>
+    </div>
 </body>
 </html>
